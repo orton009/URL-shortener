@@ -3,3 +3,6 @@
 ## Please do not remove line 5 - thanks! 🙂 ##
 ##############################################
 openapi.yaml
+.netlify
+node_modules
+backend/node_modules

@@ -2,5 +2,9 @@
   "scripts": {
     "frontend": "cd frontend && PORT=3000 node server.js",
     "backend": "cd backend && npm start"
+  },
+  "dependencies": {
+    "netlify-cli": "^17.37.2",
+    "serverless-http": "^3.2.0"
   }
 }

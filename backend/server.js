@@ -1,10 +1,12 @@
 import express from "express";
 import { nanoid } from "nanoid";
+import serverless from "serverless-http";
 
 const PORT = 8000;
 
 const app = express();
 app.use(express.json());
+const router = express.Router();
 
 /**
  * Note: This is just a showcase project, so no real database is used.
@@ -42,7 +44,7 @@ const StorageInterface = function () {
 
 const URLStorage = new StorageInterface();
 
-app.post("/url", function (req, res) {
+router.post("/url", function (req, res) {
   try {
     const { url } = req.body;
     const short = URLStorage.fetchLongURL(url);
@@ -68,7 +70,7 @@ app.post("/url", function (req, res) {
   }
 });
 
-app.get("/url/:id", function (req, res) {
+router.get("/url/:id", function (req, res) {
   try {
     const { id } = req.params;
     const shortURL = URLStorage.fetchURL(id);
@@ -87,7 +89,7 @@ app.get("/url/:id", function (req, res) {
   }
 });
 
-app.post("/url/:id/visit", function (req, res) {
+router.post("/url/:id/visit", function (req, res) {
   try {
     const id = req.params.id;
     URLStorage.incrementVisit(id);
@@ -103,6 +105,9 @@ app.post("/url/:id/visit", function (req, res) {
   }
 });
 
-app.listen(PORT, () => {
-  console.log("Server listening on PORT ", PORT);
-});
+// app.listen(PORT, () => {
+//   console.log("Server listening on PORT ", PORT);
+// });
+
+app.use("/.netlify/functions/app", router);
+module.exports.handler = serverless(app);
