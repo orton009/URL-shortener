@@ -1,0 +1,5 @@
+# Avoid accidentally uploading the API documentation
+##############################################
+## Please do not remove line 5 - thanks! 🙂 ##
+##############################################
+openapi.yaml
